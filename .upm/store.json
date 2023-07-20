@@ -1,0 +1,1 @@
+{"version":2,"languages":{"nodejs-npm":{"specfileHash":"8db6ed61efb7911799af15519e8dc888","lockfileHash":"f6c0d8d47ecb1e0f36e93680a7d380ce","guessedImports":["express","express-fileupload","imagemin","imagemin-webp","imagemin-pngquant","imagemin-optipng","imagemin-mozjpeg","imagemin-jpegtran"],"guessedImportsHash":"6c098f4d6b143993a4cd138ebcfb7434"}}}

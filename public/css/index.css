@@ -1,0 +1,56 @@
+#hero-container {
+  background-image: url(../img/hero-img.png);
+}
+
+#about-section img {
+  width: 30vw;
+}
+
+
+
+@media only screen and (max-width: 767px){
+	#about-section img {
+    width: 60vw;
+    padding: 10px;
+  }
+  #hero-container {
+    background-position: 50% -20vw;
+  }
+}
+
+#skills-section img {
+  height: 100px;
+  box-sizing: border-box;
+  
+}
+
+#skills-section div .bootstrap img {
+  padding: 10px 0 10px 0;
+}
+
+#logos {
+  font-size: 4em;
+}
+
+#logos a {
+  color: white;
+}
+
+#contact-section i {
+  transition-duration: .2s;
+}
+
+#contact-section i:hover {
+  color: #57737A;
+}
+
+#carouselExampleCaptions {
+  width: min(500px, 90vw);
+  height: 500px;
+  margin: auto;
+}
+
+#carouselExampleCaptions p, h5 {
+  color: white;
+  text-shadow: 1px 1px 5px black;
+}
