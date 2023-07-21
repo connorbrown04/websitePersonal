@@ -1,58 +1,63 @@
-let imgHref = "";
-let imgName = "";
-let downloadActive = false;
+let imgDownloads = {optimizer: {href: "", name: ""}};
 
 async function uploadFile() {
-  const uploadForm = document.querySelector("#upload-form");
-  let formData = new FormData(uploadForm);
-  if (!fileupload.files[0]) return;
+  const loadText = document.getElementById("loading-text");
+  loadText.classList.remove("d-none");
+  const uploadForm = document.querySelector("#optimizer-upload-form");
+  let formData = new FormData(uploadForm); 
+  if(!fileupload.files[0]) {
+    loadText.innerText = "No File Provided";
+    return;
+  } else {
+    loadText.innerText = "Optimizing...";
+  }
   formData.append("fileuploadd", fileupload.files[0]);
   const res = await fetch('/upload', {
-    method: "POST",
+    method: "POST", 
     body: formData
   });
-
+  
   let filename = "[placeholder]";
   for (var pair of res.headers.entries()) {
-    if (pair[0] == "filename") {
+    if(pair[0] == "filename") {
       filename = pair[1];
     }
   }
   res.blob().then(data => {
-    imgHref = window.URL.createObjectURL(data);
-    imgName = filename;
-    downloadActive = true;
-    document.querySelector("#download-button").classList.remove("hidden");
+    imgDownloads.optimizer.href = window.URL.createObjectURL(data);
+    imgDownloads.optimizer.name = filename;
+    document.querySelector("#download-button").classList.remove("d-none");
+    loadText.innerText = "";
   });
 }
 
-function downloadFile() {
+function downloadFile(project) {
   var a = document.createElement("a");
-  a.href = imgHref;
-  a.download = imgName;
+  a.href = imgDownloads[project].href;
+  a.download = imgDownloads[project].name;
   a.click();
 }
 
 function updateOptions(elementID) {
-  console.log(elementID);
-  if (elementID == "conversion-type") {
-    if (document.getElementById("conversion-type").value == "webp") {
+  if(elementID == "conversion-type") {
+    if(document.getElementById("conversion-type").value == "webp") {
       document.getElementById("loss-less").value = "lossy";
       document.getElementById("loss-less").onchange();
-      document.getElementById("lossless").classList.add("hidden");
+      document.getElementById("lossless").classList.add("d-none");
     } else {
-      document.getElementById("lossless").classList.remove("hidden");
+      document.getElementById("lossless").classList.remove("d-none");
     }
   }
-  if (elementID == "loss-less") {
-    if (document.getElementById("loss-less").value == "lossless") {
-      console.log("lossless selected")
-      document.getElementById("qual").classList.add("hidden");
-      document.getElementById("qual-label").classList.add("hidden");
+  if(elementID == "loss-less") {
+    if(document.getElementById("loss-less").value == "lossless") {
+      document.getElementById("qual-container").classList.add("d-none");
     } else {
-      document.getElementById("qual").classList.remove("hidden");
-      document.getElementById("qual-label").classList.remove("hidden");
+      document.getElementById("qual-container").classList.remove("d-none");
     }
   }
+}
+
+function updateQual(val) {
+  document.getElementById("qual-display").innerText = val;
 }
 

@@ -50,28 +50,30 @@
         <div id="project-box" class="container text-center">
           <div class="row align-items-center text-center">
             <h2>Image Optimizer</h2>
-            <form action="" id="upload-form">
-              <select class="form-control" name="conversionType" id="conversion-type" onchange="updateOptions('conversion-type')">
-                <option id="png" value="png">PNG</option>
-                <option id="jpeg" value="jpeg">JPEG</option>
+            <form id="optimizer-upload-form">
+              <select class="form-select" name="conversionType" id="conversion-type" onchange="updateOptions('conversion-type')">
+                <option id="original" value="original">Original Format</option>
                 <option id="webp" value="webp">WebP</option>
               </select><br>
     
-              <select class="form-control" name="lossLess" id="loss-less" onchange="updateOptions('loss-less')">
+              <select class="form-select" name="lossLess" id="loss-less" onchange="updateOptions('loss-less')">
                 <option id="lossless" value="lossless">Lossless</option>
                 <option id="lossy" value="lossy">Lossy</option>
               </select><br>
+
+              <div class="d-none" id="qual-container"><label id="qual-label" for="qual">Quality: <span id="qual-display">50</span></label>
+              <input class="form-range" type="range" id="qual" name="qual" min="1" max="100" step="1" onchange="updateQual(this.val)" on><br>
+              </div>
               
-              <label class="hidden" id="qual-label" for="qual">Quality:</label>
-              <input class="hidden" type="range" id="qual" name="qual" min="1" max="100" step="1"><br>
-              <label for="fileupload">Upload Img:</label><br>
-              <input class="form-control" id="fileupload" type="file" name="fileupload" />
+              <label for="fileupload">Upload Image (png, jpeg, jpg):</label><br>
+              <input class="form-control" id="fileupload" type="file" name="fileupload" accept=".png, .jpeg, .jpg"/>
               
             </form>
 
             <div id="button-container">
               <button class="btn btn-primary" id="upload-button" onclick="uploadFile()" > Upload </button>
-              <button class="btn btn-success" id="download-button" class="hidden" onclick="downloadFile()"> Download </button>
+              <button class="btn btn-success d-none" id="download-button" onclick="downloadFile('optimizer')"> Download </button><br>
+              <h3 id="loading-text"></h3>
             </div>
           </div>
         </div>
