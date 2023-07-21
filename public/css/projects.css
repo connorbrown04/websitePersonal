@@ -1,19 +1,22 @@
-#project-box {
-  height: 400px;
+.project-box {
   width: 400px;
   background: #2B3035;
   border-radius: 50px;
+  padding: 10px;
 }
 
-#upload-button, #download-button {
+.upload-button, .download-button {
   width: 25%;
 }
 
 #button-container {
-  margin: auto;
-  margin-top: 10px;
+  margin: 20px auto;
 }
 
-.hidden {
-  display: none;
+#image-optimizer {
+  height: 450px;
+}
+
+#qual {
+  margin-bottom: 15px;
 }

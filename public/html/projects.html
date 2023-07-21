@@ -47,7 +47,7 @@
     </nav>
     <section class="content">
       <section class="d-flex justify-content-center content-section">
-        <div id="project-box" class="container text-center">
+        <div id="image-optimizer" class="container text-center project-box">
           <div class="row align-items-center text-center">
             <h2>Image Optimizer</h2>
             <form id="optimizer-upload-form">
@@ -61,8 +61,9 @@
                 <option id="lossy" value="lossy">Lossy</option>
               </select><br>
 
-              <div class="d-none" id="qual-container"><label id="qual-label" for="qual">Quality: <span id="qual-display">50</span></label>
-              <input class="form-range" type="range" id="qual" name="qual" min="1" max="100" step="1" onchange="updateQual(this.val)" on><br>
+              <div class="invisible" id="qual-container">
+                <label id="qual-label" for="qual">Quality: <span id="qual-display">50</span></label>
+                <input class="form-range" type="range" id="qual" name="qual" min="1" max="100" step="1" onchange="updateQual(this.val)" on><br>
               </div>
               
               <label for="fileupload">Upload Image (png, jpeg, jpg):</label><br>
@@ -71,9 +72,9 @@
             </form>
 
             <div id="button-container">
-              <button class="btn btn-primary" id="upload-button" onclick="uploadFile()" > Upload </button>
-              <button class="btn btn-success d-none" id="download-button" onclick="downloadFile('optimizer')"> Download </button><br>
-              <h3 id="loading-text"></h3>
+              <button class="btn btn-primary upload-button" id="optimizer-upload" onclick="uploadFile()" > Upload </button>
+              <button class="btn btn-success d-none download-button" id="optimizer-download" onclick="downloadFile('optimizer')"> Download </button><br>
+              <h3 id="opti-loading-text" class="loading-text"></h3>
             </div>
           </div>
         </div>
