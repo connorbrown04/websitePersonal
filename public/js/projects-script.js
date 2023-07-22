@@ -12,17 +12,21 @@ let loadingTextElements = (() => {
 async function uploadFile() {
   const loadText = document.getElementById("opti-loading-text");
   const uploadForm = document.querySelector("#optimizer-upload-form");
+  const uploadBtn = document.querySelector("#optimizer-upload");
   let formData = new FormData(uploadForm); 
   if(!fileupload.files[0]) {
     loadText.innerText = "No File Provided";
     return;
   }
+  
   formData.append("fileuploadd", fileupload.files[0]);
   const resPromise = fetch('/upload', {
     method: "POST", 
     body: formData
   });
   loadingTextElements[loadText] = "active";
+
+  uploadBtn.disabled = "disabled";
 
   resPromise.then((res) => {
     let filename = "[placeholder]";
@@ -34,8 +38,10 @@ async function uploadFile() {
     res.blob().then(data => {
       imgDownloads.optimizer.href = window.URL.createObjectURL(data);
       imgDownloads.optimizer.name = filename;
-      document.querySelector("#optimizer-download").classList.remove("d-none");
+      loadText.innerText = "";
       loadingTextElements[loadText] = "inactive"
+      document.querySelector("#optimizer-download").classList.remove("d-none");
+      uploadBtn.removeAttribute("disabled");
     });
   });
 
@@ -75,14 +81,16 @@ function updateQual(val) {
 }
 
 async function dotAnimation(element, pretext) {
-  dotAnimationRecur(element, pretext, 0, 0);
-  element.innerText = "";
+  dotAnimationRecur(element, pretext, 0);
 }
 
-async function dotAnimationRecur(element, pretext, count, internalCount) {
-  if(loadingTextElements[element] == "inactive" || internalCount > 10000) return;
+function dotAnimationRecur(element, pretext, count) {
+  if(loadingTextElements[element] == "inactive") {
+    element.innerText = "";
+    return;
+  }
   element.innerText = pretext + ".".repeat(count);
-  setTimeout(dotAnimationRecur, 800, element, pretext, (count + 1) % 4);
+  setTimeout(dotAnimationRecur, 500, element, pretext, (count + 1) % 4);
 }
 
 

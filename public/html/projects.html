@@ -63,7 +63,7 @@
 
               <div class="invisible" id="qual-container">
                 <label id="qual-label" for="qual">Quality: <span id="qual-display">50</span></label>
-                <input class="form-range" type="range" id="qual" name="qual" min="1" max="100" step="1" onchange="updateQual(this.val)" on><br>
+                <input class="form-range" type="range" id="qual" name="qual" min="1" max="100" step="1" onchange="updateQual(this.value)" oninput="updateQual(this.value)"><br>
               </div>
               
               <label for="fileupload">Upload Image (png, jpeg, jpg):</label><br>
@@ -72,10 +72,10 @@
             </form>
 
             <div id="button-container">
-              <button class="btn btn-primary upload-button" id="optimizer-upload" onclick="uploadFile()" > Upload </button>
-              <button class="btn btn-success d-none download-button" id="optimizer-download" onclick="downloadFile('optimizer')"> Download </button><br>
-              <h3 id="opti-loading-text" class="loading-text"></h3>
+              <button class="btn btn-outline-primary upload-button" id="optimizer-upload" onclick="uploadFile()" > Upload </button>
+              <button class="btn btn-outline-success d-none download-button" id="optimizer-download" onclick="downloadFile('optimizer')"> Download </button><br>
             </div>
+            <h3 id="opti-loading-text" class="loading-text"></h3>
           </div>
         </div>
       </section>
