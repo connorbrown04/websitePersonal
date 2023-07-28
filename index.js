@@ -1,9 +1,12 @@
-//util
+//express
 import express from "express";
 import fileUpload from "express-fileupload";
+//handlebars
+import handlebars from "express-handlebars";
+//path
+import { unlink } from 'node:fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { unlink } from 'node:fs';
 import path from 'node:path';
 //imagemin plugins
 import imagemin from 'imagemin';
@@ -20,13 +23,30 @@ const __dirname = dirname(__filename);
 //create app
 const app = express();
 
+//setup handlebars
+app.set('view engine', 'hbs');
+app.engine('hbs', handlebars.engine({
+  layoutsDir: __dirname + '/views/layouts',
+  extname: 'hbs'
+}));
+
 //serve from public
 app.use('/', express.static('public'));
 app.use(fileUpload());
 
 //serve main page
 app.get('/', (req, res) => {
-  res.sendFile('/public/index.html');
+  res.render('main', {layout : 'index', home: true});
+});
+
+//serve resume page
+app.get('/resume', (req, res) => {
+  res.render('resume', {layout : 'index', resume: true});
+});
+
+//serve resume page
+app.get('/projects', (req, res) => {
+  res.render('projects', {layout : 'index', projects: true});
 });
 
 //listen on port 3000
