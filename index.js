@@ -27,7 +27,8 @@ const app = express();
 app.set('view engine', 'hbs');
 app.engine('hbs', handlebars.engine({
   layoutsDir: __dirname + '/views/layouts',
-  extname: 'hbs'
+  extname: 'hbs',
+  partialsDir: __dirname + '/views/partials/'
 }));
 
 //serve from public
@@ -55,7 +56,7 @@ app.listen(3000, () => {
 });
 
 //recieve and optimize images sent from projects.html 
-app.post('/upload', (req, res) => {
+app.post('/optimizer', (req, res) => {
   //extract data
   const { fileuploadd } = req.files;
   const { conversionType } = req.body;

@@ -27,10 +27,20 @@
         </form>
 
         <div id="button-container">
-          <button class="btn btn-outline-primary upload-button" id="optimizer-upload" onclick="uploadFile()" > Upload </button>
+          <button class="btn btn-outline-primary upload-button" id="optimizer-upload" onclick="optimizer()" > Upload </button>
           <button class="btn btn-outline-success d-none download-button" id="optimizer-download" onclick="downloadFile('optimizer')"> Download </button><br>
         </div>
         <h3 id="opti-loading-text" class="loading-text"></h3>
+      </div>
+    </div>
+    <div id="image-optimizer" class="container text-center project-box">
+      <div class="row align-items-center text-center">
+        <h2>Simple Login</h2>
+        <form>
+          <input class="form-control" id="username" type="text" name="username"/>
+          <input class="form-control" id="password" type="text" name="password"/>
+          <button class="btn btn-outline-primary upload-button" id="optimizer-upload" onclick="loginUser()" > Login </button>
+        </form>
       </div>
     </div>
   </section>
