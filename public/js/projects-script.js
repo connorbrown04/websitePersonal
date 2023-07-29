@@ -27,7 +27,7 @@ async function optimizer() {
   //TODO: figure out why I have to append file that should already be there
   formData.append("fileuploadd", fileupload.files[0]);
   //send request to server with formData
-  const resPromise = fetch('/optimizer', {
+  const resPromise = fetch('/projects/optimizer', {
     method: "POST", 
     body: formData
   });
@@ -60,10 +60,6 @@ async function optimizer() {
       uploadBtn.removeAttribute("disabled");
     });
   });
-
-  
-  
-  
 }
 
 //create anchor with download information of specific project and click
@@ -109,5 +105,25 @@ function dotAnimationRecur(element, pretext, count) {
   setTimeout(dotAnimationRecur, 500, element, pretext, (count + 1) % 4);
 }
 
+function reqLogin(e) {
+  const resPromise = fetch('/projects/reqLogin');
+  resPromise.then((res) => {
+    const htmlPromise = res.text();
+    htmlPromise.then((data) => {
+      document.querySelector("#account-box").innerHTML = data;
+    })
+  });
+  e.preventDefault();
+}
 
+function reqRegister(e) {
+  const resPromise = fetch('/projects/reqRegister');
+  resPromise.then((res) => {
+    const htmlPromise = res.text();
+    htmlPromise.then((data) => {
+      document.querySelector("#account-box").innerHTML = data;
+    })
+  });
+  e.preventDefault();
+}
 

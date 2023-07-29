@@ -56,7 +56,7 @@ app.listen(3000, () => {
 });
 
 //recieve and optimize images sent from projects.html 
-app.post('/optimizer', (req, res) => {
+app.post('/projects/optimizer', (req, res) => {
   //extract data
   const { fileuploadd } = req.files;
   const { conversionType } = req.body;
@@ -111,9 +111,13 @@ app.post('/optimizer', (req, res) => {
         if (err) throw err;
       });
     });
-
-
   })
+});
 
+app.get('/projects/reqLogin', (req, res) => {
+  res.sendFile(__dirname + '/views/partials/login.hbs');
+});
 
+app.get('/projects/reqRegister', (req, res) => {
+  res.sendFile(__dirname + '/views/partials/register.hbs');
 });
