@@ -15,6 +15,10 @@ import imageminPngquant from 'imagemin-pngquant';
 import imageminOptipng from 'imagemin-optipng';
 import imageminMozjpeg from 'imagemin-mozjpeg';
 import imageminJpegtran from 'imagemin-jpegtran';
+//login plugins
+import mysql from 'mysql';
+import bcrypt from 'bcryptjs';
+import dotenv from 'dotenv';
 
 //because replit doesn't get these by default
 const __filename = fileURLToPath(import.meta.url);
@@ -113,6 +117,23 @@ app.post('/projects/optimizer', (req, res) => {
     });
   })
 });
+
+dotenv.config({ path: './.env'});
+
+const db = mysql.createConnection({
+  host: "127.0.0.1",
+  user: "root",
+  password: "",
+  //database: process.env.DATABASE
+})
+
+db.connect((error) => {
+  if(error) {
+    console.log(error);
+  } else {
+    console.log("MySQL connected");
+  }
+})
 
 app.get('/projects/reqLogin', (req, res) => {
   res.sendFile(__dirname + '/views/partials/login.hbs');
