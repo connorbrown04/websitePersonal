@@ -5,7 +5,7 @@
   padding: 10px;
 }
 
-.upload-button, .download-button {
+#optimizer-upload, #optimizer-download {
   width: 25%;
 }
 
@@ -19,4 +19,16 @@
 
 #qual {
   margin-bottom: 15px;
+}
+
+.row {
+  margin: 10px;
+}
+
+#account-box {
+  background-color: #697682;
+  width: 80%;
+  height: 80%;
+  margin: auto;
+  border-radius: 25px;
 }

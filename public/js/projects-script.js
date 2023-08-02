@@ -1,4 +1,5 @@
-let imgDownloads = {optimizer: {href: "", name: ""}};
+let imgDownloads = {optimizer: {href: "", name: ""}};//stores the information for different file downloads on the page
+//creates an object of all .loading-text elements with a corrisponding "inactive" tag, controls when a loading animation is playing on the page
 let loadingTextElements = (() => {
   const elements = document.querySelectorAll(".loading-text");
   const values = {};
@@ -9,47 +10,59 @@ let loadingTextElements = (() => {
 })();
 
 
-async function uploadFile() {
+//uploads optimizer form and stores response file in imgDownloads
+async function optimizer() {
   const loadText = document.getElementById("opti-loading-text");
   const uploadForm = document.querySelector("#optimizer-upload-form");
   const uploadBtn = document.querySelector("#optimizer-upload");
+
+  //store form data
   let formData = new FormData(uploadForm); 
+  //return if no file
   if(!fileupload.files[0]) {
     loadText.innerText = "No File Provided";
     return;
   }
   
+  //TODO: figure out why I have to append file that should already be there
   formData.append("fileuploadd", fileupload.files[0]);
-  const resPromise = fetch('/upload', {
+  //send request to server with formData
+  const resPromise = fetch('/projects/optimizer', {
     method: "POST", 
     body: formData
   });
-  loadingTextElements[loadText] = "active";
 
+  //start loading animation
+  loadingTextElements[loadText] = "active";
+  dotAnimation(loadText, "Optimizing");
+  //disable upload btn
   uploadBtn.disabled = "disabled";
 
+  //when response is recieved
   resPromise.then((res) => {
     let filename = "[placeholder]";
+    //find and set filename
     for (var pair of res.headers.entries()) {
       if(pair[0] == "filename") {
         filename = pair[1];
       }
     }
+    //convert to blob
     res.blob().then(data => {
+      //extract url and name of image
       imgDownloads.optimizer.href = window.URL.createObjectURL(data);
       imgDownloads.optimizer.name = filename;
+      //disable loading animation
       loadText.innerText = "";
       loadingTextElements[loadText] = "inactive"
+      //unhide download btn and reenable upload button
       document.querySelector("#optimizer-download").classList.remove("d-none");
       uploadBtn.removeAttribute("disabled");
     });
   });
-
-  dotAnimation(loadText, "Optimizing");
-  
-  
 }
 
+//create anchor with download information of specific project and click
 function downloadFile(project) {
   var a = document.createElement("a");
   a.href = imgDownloads[project].href;
@@ -57,33 +70,32 @@ function downloadFile(project) {
   a.click();
 }
 
+//controls available options for optimizer form
 function updateOptions(elementID) {
   if(elementID == "conversion-type") {
     if(document.getElementById("conversion-type").value == "webp") {
       document.getElementById("loss-less").value = "lossy";
       document.getElementById("loss-less").onchange();
-      document.getElementById("lossless").classList.add("d-none");
-    } else {
-      document.getElementById("lossless").classList.remove("d-none");
     }
+    document.getElementById("lossless").classList.toggle("d-none");
+    return;
   }
   if(elementID == "loss-less") {
-    if(document.getElementById("loss-less").value == "lossless") {
-      document.getElementById("qual-container").classList.add("invisible");
-    } else {
-      document.getElementById("qual-container").classList.remove("invisible");
-    }
+    document.getElementById("qual-container").classList.toggle("invisible");
   }
 }
 
+//updates quality number with change of slider
 function updateQual(val) {
   document.getElementById("qual-display").innerText = val;
 }
 
+//wrapper function to play a trailing dot animation for loading text
 async function dotAnimation(element, pretext) {
   dotAnimationRecur(element, pretext, 0);
 }
 
+//recursive timeout function that creates a 3 trailing dot aimation
 function dotAnimationRecur(element, pretext, count) {
   if(loadingTextElements[element] == "inactive") {
     element.innerText = "";
@@ -93,5 +105,25 @@ function dotAnimationRecur(element, pretext, count) {
   setTimeout(dotAnimationRecur, 500, element, pretext, (count + 1) % 4);
 }
 
+function reqLogin(e) {
+  const resPromise = fetch('/projects/reqLogin');
+  resPromise.then((res) => {
+    const htmlPromise = res.text();
+    htmlPromise.then((data) => {
+      document.querySelector("#account-box").innerHTML = data;
+    })
+  });
+  e.preventDefault();
+}
 
+function reqRegister(e) {
+  const resPromise = fetch('/projects/reqRegister');
+  resPromise.then((res) => {
+    const htmlPromise = res.text();
+    htmlPromise.then((data) => {
+      document.querySelector("#account-box").innerHTML = data;
+    })
+  });
+  e.preventDefault();
+}
 

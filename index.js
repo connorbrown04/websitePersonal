@@ -15,6 +15,10 @@ import imageminPngquant from 'imagemin-pngquant';
 import imageminOptipng from 'imagemin-optipng';
 import imageminMozjpeg from 'imagemin-mozjpeg';
 import imageminJpegtran from 'imagemin-jpegtran';
+//login plugins
+import mysql from 'mysql';
+import bcrypt from 'bcryptjs';
+import dotenv from 'dotenv';
 
 //because replit doesn't get these by default
 const __filename = fileURLToPath(import.meta.url);
@@ -27,7 +31,8 @@ const app = express();
 app.set('view engine', 'hbs');
 app.engine('hbs', handlebars.engine({
   layoutsDir: __dirname + '/views/layouts',
-  extname: 'hbs'
+  extname: 'hbs',
+  partialsDir: __dirname + '/views/partials/'
 }));
 
 //serve from public
@@ -55,7 +60,7 @@ app.listen(3000, () => {
 });
 
 //recieve and optimize images sent from projects.html 
-app.post('/upload', (req, res) => {
+app.post('/projects/optimizer', (req, res) => {
   //extract data
   const { fileuploadd } = req.files;
   const { conversionType } = req.body;
@@ -110,9 +115,30 @@ app.post('/upload', (req, res) => {
         if (err) throw err;
       });
     });
-
-
   })
+});
 
+dotenv.config({ path: './.env'});
 
+const db = mysql.createConnection({
+  host: "127.0.0.1",
+  user: "root",
+  password: "",
+  //database: process.env.DATABASE
+})
+
+db.connect((error) => {
+  if(error) {
+    console.log(error);
+  } else {
+    console.log("MySQL connected");
+  }
+})
+
+app.get('/projects/reqLogin', (req, res) => {
+  res.sendFile(__dirname + '/views/partials/login.hbs');
+});
+
+app.get('/projects/reqRegister', (req, res) => {
+  res.sendFile(__dirname + '/views/partials/register.hbs');
 });
