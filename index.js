@@ -120,27 +120,27 @@ app.post('/projects/optimizer', (req, res) => {
   })
 });
 
-dotenv.config({ path: './.env'});
+// dotenv.config({ path: './.env'});
 
-const db = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "root",
-  password: "Rsd222034?",
-  //database: process.env.DATABASE
-})
+// const db = mysql.createConnection({
+//   host: "127.0.0.1",
+//   user: "root",
+//   password: "Rsd222034?",
+//   //database: process.env.DATABASE
+// })
 
-db.connect((error) => {
-  if(error) {
-    console.log(error);
-  } else {
-    console.log("MySQL connected");
-  }
-})
+// db.connect((error) => {
+//   if(error) {
+//     console.log(error);
+//   } else {
+//     console.log("MySQL connected");
+//   }
+// })
 
-app.get('/projects/reqLogin', (req, res) => {
-  res.sendFile(__dirname + '/views/partials/login.hbs');
-});
+// app.get('/projects/reqLogin', (req, res) => {
+//   res.sendFile(__dirname + '/views/partials/login.hbs');
+// });
 
-app.get('/projects/reqRegister', (req, res) => {
-  res.sendFile(__dirname + '/views/partials/register.hbs');
-});
+// app.get('/projects/reqRegister', (req, res) => {
+//   res.sendFile(__dirname + '/views/partials/register.hbs');
+// });
