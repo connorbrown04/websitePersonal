@@ -20,6 +20,8 @@ import mysql from 'mysql';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 
+const portNum = 3000;
+
 //because replit doesn't get these by default
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -54,9 +56,9 @@ app.get('/projects', (req, res) => {
   res.render('projects', {layout : 'index', projects: true});
 });
 
-//listen on port 3000
-app.listen(3000, () => {
-  console.log('Listening on port 3000');
+//listen on specified port
+app.listen(portNum, () => {
+  console.log(`Listening on port ${portNum}`);
 });
 
 //recieve and optimize images sent from projects.html 
@@ -118,27 +120,27 @@ app.post('/projects/optimizer', (req, res) => {
   })
 });
 
-dotenv.config({ path: './.env'});
+// dotenv.config({ path: './.env'});
 
-const db = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "root",
-  password: "",
-  //database: process.env.DATABASE
-})
+// const db = mysql.createConnection({
+//   host: "127.0.0.1",
+//   user: "root",
+//   password: "Rsd222034?",
+//   //database: process.env.DATABASE
+// })
 
-db.connect((error) => {
-  if(error) {
-    console.log(error);
-  } else {
-    console.log("MySQL connected");
-  }
-})
+// db.connect((error) => {
+//   if(error) {
+//     console.log(error);
+//   } else {
+//     console.log("MySQL connected");
+//   }
+// })
 
-app.get('/projects/reqLogin', (req, res) => {
-  res.sendFile(__dirname + '/views/partials/login.hbs');
-});
+// app.get('/projects/reqLogin', (req, res) => {
+//   res.sendFile(__dirname + '/views/partials/login.hbs');
+// });
 
-app.get('/projects/reqRegister', (req, res) => {
-  res.sendFile(__dirname + '/views/partials/register.hbs');
-});
+// app.get('/projects/reqRegister', (req, res) => {
+//   res.sendFile(__dirname + '/views/partials/register.hbs');
+// });
