@@ -1,6 +1,10 @@
-//express
+//express server
+import https from "https";
+import http from "http";
 import express from "express";
 import fileUpload from "express-fileupload";
+import fs from "fs";
+import bodyParser from "body-parser";
 //handlebars
 import handlebars from "express-handlebars";
 //path
@@ -20,14 +24,16 @@ import mysql from 'mysql';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 
-const portNum = 3000;
+const portNum = 443;
+const hostname = "connor-brown.dev";
 
 //because replit doesn't get these by default
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-//create app
+//create app and server
 const app = express();
+const httpServer = http.createServer(app);
 
 //setup handlebars
 app.set('view engine', 'hbs');
@@ -40,11 +46,31 @@ app.engine('hbs', handlebars.engine({
 //serve from public
 app.use('/', express.static('public'));
 app.use(fileUpload());
+app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.json());
+
+const options = {
+  key: fs.readFileSync("./SSL/privkey1.pem"),
+  cert: fs.readFileSync("./SSL/cert1.pem"),
+};
+
+//listen on specified port
+https.createServer(options, app)
+.listen(portNum, () => {
+  console.log(`HTTP server listening on port ${portNum}`);
+});
 
 //serve main page
 app.get('/', (req, res) => {
   res.render('main', {layout : 'index', home: true});
 });
+
+app.post("/mssg", function (req, res) {
+
+  console.log(req.body);
+  
+  res.redirect("/");
+  });
 
 //serve resume page
 app.get('/resume', (req, res) => {
@@ -54,11 +80,6 @@ app.get('/resume', (req, res) => {
 //serve resume page
 app.get('/projects', (req, res) => {
   res.render('projects', {layout : 'index', projects: true});
-});
-
-//listen on specified port
-app.listen(portNum, () => {
-  console.log(`Listening on port ${portNum}`);
 });
 
 //recieve and optimize images sent from projects.html 
