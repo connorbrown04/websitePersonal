@@ -50,8 +50,8 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 
 const options = {
-  key: fs.readFileSync("./SSL/privkey1.pem"),
-  cert: fs.readFileSync("./SSL/cert1.pem"),
+  key: fs.readFileSync( __dirname + "/SSL/privkey1.pem"),
+  cert: fs.readFileSync(__dirname + "/SSL/cert1.pem"),
 };
 
 //listen on specified port
@@ -117,8 +117,8 @@ app.post('/projects/optimizer', (req, res) => {
   if(conversionType == "webp") plugin = imageminWebp;
   
   //optimize image through imagemin
-  imagemin(["./recieved/" + fileuploadd.name], {
-    destination: "./to-upload/",
+  imagemin([__dirname + "/recieved/" + fileuploadd.name], {
+    destination: __dirname + "/to-upload/",
     plugins: [
       plugin({ quality: qual })
     ],
@@ -141,7 +141,7 @@ app.post('/projects/optimizer', (req, res) => {
   })
 });
 
-dotenv.config({ path: './.env'});
+dotenv.config({ path: __dirname + '/.env'});
 
 const db = mysql.createConnection({
   host: "127.0.0.1",
