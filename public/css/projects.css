@@ -3,6 +3,7 @@
   background: #2B3035;
   border-radius: 50px;
   padding: 10px;
+  height: 450px;
 }
 
 #optimizer-upload, #optimizer-download {
