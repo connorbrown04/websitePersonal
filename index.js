@@ -23,6 +23,7 @@ import imageminJpegtran from 'imagemin-jpegtran';
 import mysql from 'mysql';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
+import { argv } from "process";
 
 const portNum = 443;
 const hostname = "connor-brown.dev";
@@ -34,6 +35,9 @@ const __dirname = dirname(__filename);
 //create app and server
 const app = express();
 const httpServer = http.createServer(app);
+
+//get SSL folder
+const sslPath = process.argv[2];
 
 //setup handlebars
 app.set('view engine', 'hbs');
@@ -50,8 +54,8 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 
 const options = {
-  key: fs.readFileSync( __dirname + "/SSL/privkey1.pem"),
-  cert: fs.readFileSync(__dirname + "/SSL/cert1.pem"),
+  key: fs.readFileSync(sslPath + "/privkey1.pem"),
+  cert: fs.readFileSync(sslPath + "/SSL/cert1.pem"),
 };
 
 //listen on specified port
