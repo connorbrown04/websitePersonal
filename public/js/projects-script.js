@@ -19,6 +19,7 @@ async function optimizer() {
   //store form data
   let formData = new FormData(uploadForm); 
   //return if no file
+  console.log(fileupload.files[0]);
   if(!fileupload.files[0]) {
     loadText.innerText = "No File Provided";
     return;
@@ -127,3 +128,57 @@ function reqRegister(e) {
   e.preventDefault();
 }
 
+function sendLogin() {
+  const loginForm = document.querySelector("#simple-login-form");
+  const submitBtn = document.querySelector("#login-submit");
+}
+
+function sendRegister() {
+  const loginForm = document.querySelector("#simple-login-form");
+  const submitBtn = document.querySelector("#login-submit");
+
+  //store form data
+  let formData = new FormData(uploadForm); 
+  //return if no file
+  if(!fileupload.files[0]) {
+    loadText.innerText = "No File Provided";
+    return;
+  }
+  
+  //TODO: figure out why I have to append file that should already be there
+  formData.append("fileuploadd", fileupload.files[0]);
+  //send request to server with formData
+  const resPromise = fetch('/projects/optimizer', {
+    method: "POST", 
+    body: formData
+  });
+
+  //start loading animation
+  loadingTextElements[loadText] = "active";
+  dotAnimation(loadText, "Optimizing");
+  //disable upload btn
+  uploadBtn.disabled = "disabled";
+
+  //when response is recieved
+  resPromise.then((res) => {
+    let filename = "[placeholder]";
+    //find and set filename
+    for (var pair of res.headers.entries()) {
+      if(pair[0] == "filename") {
+        filename = pair[1];
+      }
+    }
+    //convert to blob
+    res.blob().then(data => {
+      //extract url and name of image
+      imgDownloads.optimizer.href = window.URL.createObjectURL(data);
+      imgDownloads.optimizer.name = filename;
+      //disable loading animation
+      loadText.innerText = "";
+      loadingTextElements[loadText] = "inactive"
+      //unhide download btn and reenable upload button
+      document.querySelector("#optimizer-download").classList.remove("d-none");
+      uploadBtn.removeAttribute("disabled");
+    });
+  });
+}
