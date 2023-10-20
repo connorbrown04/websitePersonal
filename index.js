@@ -36,9 +36,10 @@ const __dirname = dirname(__filename);
 const app = express();
 const httpServer = http.createServer(app);
 
-//get SSL folder
-const sslPrivPath = process.argv[2];
-const sslCertPath = process.argv[3];
+//get SSL certificate and key
+const sslCertPath = process.argv[2];
+const sslPrivPath = process.argv[3];
+
 
 //setup handlebars
 app.set('view engine', 'hbs');
