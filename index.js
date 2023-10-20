@@ -26,7 +26,6 @@ import dotenv from 'dotenv';
 import { argv } from "process";
 
 const portNum = 443;
-const hostname = "connor-brown.dev";
 
 //because replit doesn't get these by default
 const __filename = fileURLToPath(import.meta.url);
@@ -63,7 +62,7 @@ const options = {
 //listen on specified port
 https.createServer(options, app)
 .listen(portNum, () => {
-  console.log(`HTTP server listening on port ${portNum}`);
+  console.log(`HTTPS server listening on port ${portNum}`);
 });
 
 //serve main page
@@ -150,10 +149,10 @@ app.post('/projects/optimizer', (req, res) => {
 dotenv.config({ path: __dirname + '/.env'});
 
 const db = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "root",
-  password: "Rsd222034?",
-  //database: process.env.DATABASE
+  host: process.env.DATABASE_HOST,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE
 })
 
 db.connect((error) => {
