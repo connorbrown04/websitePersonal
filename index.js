@@ -20,7 +20,7 @@ import imageminOptipng from 'imagemin-optipng';
 import imageminMozjpeg from 'imagemin-mozjpeg';
 import imageminJpegtran from 'imagemin-jpegtran';
 //login plugins
-import mysql from 'mysql';
+import mysql2 from 'mysql2';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import { argv } from "process";
@@ -38,6 +38,7 @@ const httpServer = http.createServer(app);
 //get SSL certificate and key
 const sslCertPath = process.argv[2];
 const sslPrivPath = process.argv[3];
+const envPath = process.argv[4];
 
 
 //setup handlebars
@@ -146,9 +147,9 @@ app.post('/projects/optimizer', (req, res) => {
   })
 });
 
-dotenv.config({ path: __dirname + '/.env'});
+dotenv.config({ path: envPath});
 
-const db = mysql.createConnection({
+const db = mysql2.createConnection({
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
