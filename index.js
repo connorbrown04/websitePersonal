@@ -37,7 +37,8 @@ const app = express();
 const httpServer = http.createServer(app);
 
 //get SSL folder
-const sslPath = process.argv[2];
+const sslPrivPath = process.argv[2];
+const sslCertPath = process.argv[3];
 
 //setup handlebars
 app.set('view engine', 'hbs');
@@ -54,8 +55,8 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 
 const options = {
-  key: fs.readFileSync(sslPath + "/privkey1.pem"),
-  cert: fs.readFileSync(sslPath + "/SSL/cert1.pem"),
+  key: fs.readFileSync(sslPrivPath),
+  cert: fs.readFileSync(sslCertPath),
 };
 
 //listen on specified port
