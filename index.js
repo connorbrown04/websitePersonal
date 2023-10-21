@@ -25,7 +25,7 @@ import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import { argv } from "process";
 
-const portNum = 443;
+const portNum = 3000;
 
 //because replit doesn't get these by default
 const __filename = fileURLToPath(import.meta.url);
@@ -130,7 +130,7 @@ app.post('/projects/optimizer', (req, res) => {
     ],
   }).then((data) => {
     //save optimized image path
-    const sFilePath = __dirname + '/' + data[0].destinationPath;
+    const sFilePath = data[0].destinationPath;
 
     //configure response and send file
     res.attachment(sFilePath);
