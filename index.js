@@ -25,7 +25,7 @@ import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import { argv } from "process";
 
-const portNum = 3000;
+const portNum = 443;
 
 //because replit doesn't get these by default
 const __filename = fileURLToPath(import.meta.url);
