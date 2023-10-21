@@ -1,0 +1,1 @@
+git does not push empty directories, the recieved directory temporarily holds uploaded files while they are being processed
